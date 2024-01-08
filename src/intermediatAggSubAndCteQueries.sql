@@ -22,8 +22,22 @@ order by rental_count desc;
 
 
 /* Find the actor who has appeared in the most rented films. */
-select *
-from film_actor
+
+-- find film_id of all rented films
+with RentedFilms as (select distinct f.film_id
+                     from rental
+                              join inventory using (inventory_id)
+                              join film f on inventory.film_id = f.film_id)
+
+select a.first_name || ' ' || a.last_name as full_name, count(fa.film_id) as counts
+from film_actor fa
+         join RentedFilms on RentedFilms.film_id = fa.film_id
+         join actor a on fa.actor_id = a.actor_id
+group by full_name
+order by counts desc
+limit 1;
+
+
 
 
 
