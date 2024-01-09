@@ -38,6 +38,16 @@ order by counts desc
 limit 1;
 
 
+/* Analyze how the popularity of different film categories has changed over time (e.g., month by month or year by year). */
+select c.name, extract(year from r.rental_date) as year, count(r.rental_id) as rental_count
+from rental r
+         join inventory i using (inventory_id)
+         join film f on i.film_id = f.film_id
+         join film_category fc on f.film_id = fc.film_id
+         join category c on fc.category_id = c.category_id
+group by c.name, year
+order by c.name, year;
+
 
 
 
