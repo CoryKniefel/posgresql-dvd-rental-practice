@@ -50,4 +50,20 @@ order by c.name, year;
 
 
 
+/* List films that were never rented out during the year of 2005. */
+-- This approach doesn't work since a film often has multiple copies in inventory, and it will return records if any inventory item wasn't rented
+select distinct f.title
+from film f
+         join inventory i on f.film_id = i.film_id
+         left join rental r on i.inventory_id = r.inventory_id and extract(year from r.rental_date) = 2005
+where r.rental_id is null;
+
+-- This approach is better since it accuratly returns only films that have not been rented, regaurdless of copies in inventory.
+-- This is achieved grouping by title, and using a condition in the having clause to filter out groups that have been rented.
+select f.title
+from film f
+         join inventory i on f.film_id = i.film_id
+         left join rental r on i.inventory_id = r.inventory_id and extract(year from r.rental_date) = 2005
+group by f.title
+having count(r.rental_id) = 0;
 
