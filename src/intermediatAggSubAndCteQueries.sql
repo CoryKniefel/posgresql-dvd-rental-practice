@@ -58,7 +58,7 @@ from film f
          left join rental r on i.inventory_id = r.inventory_id and extract(year from r.rental_date) = 2005
 where r.rental_id is null;
 
--- This approach is better since it accuratly returns only films that have not been rented, regaurdless of copies in inventory.
+-- This approach is better since it accurately returns only films that have not been rented, regardless of copies in inventory.
 -- This is achieved grouping by title, and using a condition in the having clause to filter out groups that have been rented.
 select f.title
 from film f
@@ -67,3 +67,19 @@ from film f
 group by f.title
 having count(r.rental_id) = 0;
 
+
+/* For each city, identify the top 3 customers based on the number of rentals. */
+select city_name, customer_name, rental_count, customer_rank
+
+from (select city.city                                                        as city_name,
+             c.first_name || ' ' || c.last_name                               as customer_name,
+             count(r.rental_id)                                               as rental_count,
+             rank() over (partition by city order by count(r.rental_id) desc) as customer_rank
+
+      from customer c
+               join address a on c.address_id = a.address_id
+               join city on a.city_id = city.city_id
+               join rental r on c.customer_id = r.customer_id
+      group by city.city, c.customer_id) as RankedCustomers
+where customer_rank <= 3
+order by  city_name;
