@@ -92,7 +92,24 @@ from rental r
 group by f.rating;
 
 
-
+/* Determine the most frequently rented film category for each store. */
+with TopCategories as (select i.store_id,
+                              c.name,
+                              count(r.rental_id)                     as rental_count,
+                              rank() over (
+                                  partition by i.store_id
+                                  order by count(r.rental_id) desc ) as category_rank
+                       from rental r
+                                join inventory i using (inventory_id)
+                                join film f using (film_id)
+                                join film_category fc using (film_id)
+                                join category c using (category_id)
+                                join store sto on i.store_id = sto.store_id
+                       group by i.store_id, c.name
+                       order by store_id, category_rank)
+select tc.store_id, tc.name as catetory_name, tc.rental_count, tc.category_rank
+from TopCategories as tc
+where tc.category_rank < 4;
 
 
 
