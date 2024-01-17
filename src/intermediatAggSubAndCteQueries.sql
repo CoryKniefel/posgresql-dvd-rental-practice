@@ -82,4 +82,34 @@ from (select city.city                                                        as
                join rental r on c.customer_id = r.customer_id
       group by city.city, c.customer_id) as RankedCustomers
 where customer_rank <= 3
-order by  city_name;
+order by city_name;
+
+/* Calculate the average rental duration (difference between rental date and return date) for films in each rating category. */
+select f.rating, avg(extract(DAY from r.return_date - r.rental_date)) as average_rental
+from rental r
+         join inventory i on r.inventory_id = i.inventory_id
+         join film f on i.film_id = f.film_id
+group by f.rating;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
