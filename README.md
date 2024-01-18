@@ -1,3 +1,14 @@
+## Classic DVD Rental Database Queries 
+
+This project is for me to revisit the core concepts of writing SQL queries to sharpen my data manipulation and retrieval skills. 
+Understanding and effectively using SQL is crucial in today's data-driven world, 
+where the ability to quickly and accurately extract insights from databases is highly valued across many industries.
+
+
+I chose PostgreSQL because it's a powerful, open-source object-relational database system that's widely used in the industry. 
+I used the demo database from [Postgres Tutorial site](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/). 
+ 
+
 ## Practice Queries 
 
 ### Aggregate Functions
