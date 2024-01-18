@@ -1,17 +1,5 @@
 ## Practice Queries 
 
-### Basic Queries
-
-1) List all movies with a PG-13 rating.
-1) Find all actors with a last name starting with 'C'.
-1) Count the number of films in each rating category.
-
-### Join Operations
-
-1) Display the first and last names of customers along with the titles of movies they have rented.
-1) List movies along with the names of their actors (you'll need to join at least three tables here).
-1) Show all films that were rented in May 2005.
-
 ### Aggregate Functions
 
 1) Find the total amount of payments received by each staff member.
